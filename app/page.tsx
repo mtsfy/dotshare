@@ -3,7 +3,6 @@ import { getPosts } from "@/actions/getPosts";
 import AuthClient from "@/components/AuthClient";
 import ClientOnly from "@/components/ClientOnly";
 import Container from "@/components/Container";
-import Button from "@/components/inputs/Button";
 import PostCard from "@/components/post/PostCard";
 
 const Home = async () => {
@@ -49,7 +48,7 @@ const Home = async () => {
                 >
                   <PostCard
                     key={post.id}
-                    data={post}
+                    post={post}
                     currentUser={currentUser}
                   />
                 </div>

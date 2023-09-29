@@ -1,22 +1,13 @@
 "use client";
 
-import {
-  GoBell,
-  GoBookmark,
-  GoHeart,
-  GoHome,
-  GoPencil,
-  GoPeople,
-  GoPerson,
-  GoPlus,
-} from "react-icons/go";
+import { GoBookmark, GoHeart, GoHome, GoPeople, GoPlus } from "react-icons/go";
 import { useRouter } from "next/navigation";
 import useCreatePostModal from "@/hooks/useCreatePostModal";
-import { SafeUser } from "@/types";
 import NavButton from "./inputs/NavButton";
+import { User } from "@prisma/client";
 
 interface BottombarProps {
-  currentUser: Record<string, any>;
+  currentUser: User;
 }
 
 const Bottombar: React.FC<BottombarProps> = ({ currentUser }) => {

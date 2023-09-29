@@ -3,14 +3,13 @@
 import Heading from "@/components/Heading";
 import SavedCard from "@/components/SavedCard";
 import Button from "@/components/inputs/Button";
-import { SafePost, SafeUser } from "@/types";
-import { Post } from "@prisma/client";
+import { Post, User } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { GoBookmark } from "react-icons/go";
 
 interface SavedClientProps {
   posts: Post[];
-  currentUser: Record<string, any>;
+  currentUser: User;
 }
 
 const SavedClient: React.FC<SavedClientProps> = ({ posts, currentUser }) => {

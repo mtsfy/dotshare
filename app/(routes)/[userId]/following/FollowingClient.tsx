@@ -2,12 +2,31 @@
 
 import Heading from "@/components/Heading";
 import UserCard from "@/components/UserCard";
+import { Post, User } from "@prisma/client";
 import React, { FC } from "react";
 
 interface FollowingClientProps {
-  followingList: Record<string, any>[];
-  profile: Record<string, any> | null;
-  currentUser: Record<string, any>;
+  followingList: {
+    image: string | null;
+    id: string;
+    name: string | null;
+    category: string;
+    username: string;
+    followedByIDs: string[];
+    followingIDs: string[];
+  }[];
+  profile: {
+    image: string | null;
+    id: string;
+    name: string | null;
+    category: string;
+    bio: string | null;
+    followedByIDs: string[];
+    followingIDs: string[];
+    username: string;
+    posts: Post[];
+  };
+  currentUser: User;
 }
 const FollowingClient: FC<FollowingClientProps> = ({
   followingList,
@@ -36,7 +55,7 @@ const FollowingClient: FC<FollowingClientProps> = ({
         />
       </div>
       <div className="bg-neutral-200/50 p-4 rounded-lg">
-        {followingList.map((user: any) => (
+        {followingList.map((user) => (
           <UserCard key={user.id} currentUser={currentUser} user={user} />
         ))}
       </div>

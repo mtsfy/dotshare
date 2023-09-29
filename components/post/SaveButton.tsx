@@ -3,10 +3,11 @@ import useSave from "@/hooks/useSave";
 import { PulseLoader } from "react-spinners";
 import React, { FC } from "react";
 import { GoBookmark, GoBookmarkFill } from "react-icons/go";
+import { User } from "@prisma/client";
 
 interface SaveButtonProps {
   postId: string;
-  currentUser: Record<string, any>;
+  currentUser: User;
   white?: boolean;
 }
 

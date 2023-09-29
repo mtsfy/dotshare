@@ -4,13 +4,13 @@ import Container from "../Container";
 import Logo from "../Logo";
 import NavButton from "../inputs/NavButton";
 import MainNav from "./MainNav";
-import { SafeUser } from "@/types";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { CldImage } from "next-cloudinary";
+import { User } from "@prisma/client";
 
 interface NavbarProps {
-  currentUser?: Record<string, any> | null;
+  currentUser?: User | null;
 }
 
 const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {

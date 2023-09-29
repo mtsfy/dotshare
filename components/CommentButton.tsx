@@ -1,13 +1,13 @@
 "use client";
 
-import { SafeUser } from "@/types";
+import { User } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { GoCommentDiscussion } from "react-icons/go";
 
 interface CommentButtonProps {
   postId: string;
-  currentUser: Record<string, any>;
+  currentUser: User;
   active: boolean;
 }
 

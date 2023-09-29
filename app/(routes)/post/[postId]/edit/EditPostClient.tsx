@@ -1,6 +1,7 @@
 "use client";
 import Button from "@/components/inputs/Button";
 import Input from "@/components/inputs/Input";
+import { User } from "@prisma/client";
 import axios from "axios";
 import { CldImage } from "next-cloudinary";
 import { useRouter } from "next/navigation";
@@ -10,8 +11,33 @@ import toast from "react-hot-toast";
 import { GoArrowLeft } from "react-icons/go";
 
 interface EditPostClientProps {
-  post: Record<string, any>;
-  currentUser: Record<string, any>;
+  post: {
+    id: string;
+    createdAt: Date;
+    updatedAt: Date;
+    imageSrc: string;
+    likeIds: string[];
+    caption: string;
+    title: string;
+    userId: string;
+
+    user: {
+      id: string;
+      name: string | null;
+      username: string;
+      image: string | null;
+    };
+    comments: {
+      user: {
+        id: string;
+        name: string | null;
+        username: string;
+      };
+      content: string;
+      createdAt: Date;
+    }[];
+  };
+  currentUser: User;
 }
 
 const EditPostClient: FC<EditPostClientProps> = ({ post, currentUser }) => {

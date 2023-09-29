@@ -3,13 +3,13 @@
 import Heading from "@/components/Heading";
 import SavedCard from "@/components/SavedCard";
 import Button from "@/components/inputs/Button";
-import { Post } from "@prisma/client";
+import { Post, User } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { GoHeart } from "react-icons/go";
 
 interface LikesClientProps {
   posts: Post[];
-  currentUser: Record<string, any>;
+  currentUser: User;
 }
 
 const LikesClient: React.FC<LikesClientProps> = ({ posts, currentUser }) => {

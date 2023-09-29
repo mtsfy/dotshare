@@ -19,11 +19,11 @@ import useSignInModal from "@/hooks/useSignInModal";
 import NavItem from "./NavItem";
 import { signOut } from "next-auth/react";
 import Avatar from "../Avatar";
-import { SafeUser } from "@/types";
 import useCreatePostModal from "@/hooks/useCreatePostModal";
+import { User } from "@prisma/client";
 
 interface MainNavProps {
-  currentUser?: SafeUser | null;
+  currentUser?: User | null;
 }
 
 const MainNav: React.FC<MainNavProps> = ({ currentUser }) => {

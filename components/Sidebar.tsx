@@ -15,9 +15,10 @@ import NavButton from "./inputs/NavButton";
 import useCreatePostModal from "@/hooks/useCreatePostModal";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { User } from "@prisma/client";
 
 interface SidebarProps {
-  currentUser: Record<string, any>;
+  currentUser: User;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ currentUser }) => {

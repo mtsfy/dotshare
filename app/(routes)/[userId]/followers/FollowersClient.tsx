@@ -2,12 +2,31 @@
 
 import Heading from "@/components/Heading";
 import UserCard from "@/components/UserCard";
+import { Post, User } from "@prisma/client";
 import React, { FC } from "react";
 
 interface FollowersClientProps {
-  currentUser: Record<string, any>;
-  followingList: Record<string, any>[];
-  profile: Record<string, any> | null;
+  currentUser: User;
+  followingList: {
+    image: string | null;
+    username: string;
+    id: string;
+    name: string | null;
+    category: string;
+    followedByIDs: string[];
+    followingIDs: string[];
+  }[];
+  profile: {
+    image: string | null;
+    id: string;
+    name: string | null;
+    category: string;
+    bio: string | null;
+    followedByIDs: string[];
+    followingIDs: string[];
+    username: string;
+    posts: Post[];
+  };
 }
 const FollowersClient: FC<FollowersClientProps> = ({
   followingList,

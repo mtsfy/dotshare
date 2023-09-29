@@ -11,9 +11,10 @@ import { Field, FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import TextArea from "@/components/inputs/Textarea";
+import { User } from "@prisma/client";
 
 interface EditProfileClientProps {
-  user: Record<string, any>;
+  user: User;
 }
 
 const EditProfileClient: React.FC<EditProfileClientProps> = ({ user }) => {

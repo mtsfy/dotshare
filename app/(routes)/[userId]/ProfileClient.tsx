@@ -3,22 +3,32 @@
 import Avatar from "@/components/Avatar";
 import FollowButton from "@/components/FollowButton";
 import SavedCard from "@/components/SavedCard";
-import { SafeUser } from "@/types";
-import { Post } from "@prisma/client";
+import { Post, User } from "@prisma/client";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { CldImage } from "next-cloudinary";
 
 interface ProfileClientProps {
-  currentUser: SafeUser;
-  profile: Record<string, any>;
+  currentUser: User;
+  profile: {
+    image: string | null;
+    id: string;
+    name: string | null;
+    category: string;
+    bio: string | null;
+    followedByIDs: string[];
+    followingIDs: string[];
+    username: string;
+    posts: Post[];
+  };
 }
 
 const ProfileClient: React.FC<ProfileClientProps> = ({
   currentUser,
   profile,
 }) => {
+  console.log(profile);
   const router = useRouter();
   // if (currentUser.id !== profile.id) {
   //   return (

@@ -1,5 +1,5 @@
 "use client";
-import { SafeUser } from "@/types";
+import { User } from "@prisma/client";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
@@ -7,7 +7,7 @@ import { toast } from "react-hot-toast";
 
 interface IUseSave {
     postId: string;
-    currentUser: Record<string, any>;
+    currentUser: User;
 }
 
 const useSave = ({postId, currentUser}: IUseSave) => {

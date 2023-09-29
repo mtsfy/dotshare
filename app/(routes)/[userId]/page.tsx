@@ -43,9 +43,6 @@ const ProfilePage = async ({ params }: { params: IParams }) => {
           <ProfileClient currentUser={currentUser} profile={profile} />
         </div>
       </div>
-      {/* <div className="pt-24 lg:ml-44 md:ml-24 sm:ml-4 flex sm:block">
-        
-      </div> */}
     </ClientOnly>
   );
 };

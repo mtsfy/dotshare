@@ -22,6 +22,13 @@ export async function getFriends () {
                where: {
                  id: followedUserId,
                },
+               select: {
+                  id: true,
+                  name: true,
+                  username: true, 
+                  image: true,
+                  category: true
+               }
              });
              friends.push(friend);
            }

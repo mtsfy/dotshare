@@ -1,7 +1,6 @@
 "use client";
 
 import useLike from "@/hooks/useLike";
-import { SafeUser } from "@/types";
 import { User } from "@prisma/client";
 import { GoHeart, GoHeartFill } from "react-icons/go";
 import { PulseLoader } from "react-spinners";

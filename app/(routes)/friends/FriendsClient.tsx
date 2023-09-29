@@ -3,14 +3,19 @@
 import Heading from "@/components/Heading";
 import UserCard from "@/components/UserCard";
 import Button from "@/components/inputs/Button";
-import { SafeUser } from "@/types";
 import { User } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { GoPeople } from "react-icons/go";
 
 interface FriendsClientProps {
-  friends: Record<string, any>[];
-  currentUser: SafeUser;
+  friends: ({
+    id: string;
+    name: string | null;
+    category: string;
+    username: string;
+    image: string | null;
+  } | null)[];
+  currentUser: User;
 }
 const FriendsClient: React.FC<FriendsClientProps> = ({
   friends,
@@ -22,9 +27,6 @@ const FriendsClient: React.FC<FriendsClientProps> = ({
       <div className="w-3xl flex flex-col items-center pt-32">
         <GoPeople size={50} />
         <div className="mt-2 font-bold text-2xl">No friends to show.</div>
-        {/* <div className="font-semibold text-neutral-500 text-lg">
-          No result found.
-        </div> */}
         <div className="mt-8 w-80">
           <Button
             label="Find Friends"

@@ -1,7 +1,7 @@
 "use client";
 
 import { CldImage } from "next-cloudinary";
-import { GoKebabHorizontal } from "react-icons/go";
+import { GoCommentDiscussion, GoKebabHorizontal } from "react-icons/go";
 import Heading from "../Heading";
 import HeartButton from "./HeartButton";
 import SaveButton from "./SaveButton";
@@ -11,14 +11,23 @@ import { formatTimeAgo } from "@/libs/utils";
 import { useState } from "react";
 import FollowButton from "../FollowButton";
 import useDeletePostModal from "@/hooks/useDeletePostModal";
+import { Post, User, Comment as CommentType } from "@prisma/client";
 interface PostCardProps {
-  data: Record<string, any>;
-  currentUser: Record<string, any>;
+  post: Post & {
+    user: {
+      image: string | null;
+      id: string;
+      name: string | null;
+      username: string;
+    };
+    comments: CommentType[];
+  };
+  currentUser: User;
 }
 
-const PostCard: React.FC<PostCardProps> = ({ data, currentUser }) => {
+const PostCard: React.FC<PostCardProps> = ({ post, currentUser }) => {
   const router = useRouter();
-  // console.log(currentUser);
+  console.log(currentUser);
   const deletePostModal = useDeletePostModal();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -28,7 +37,7 @@ const PostCard: React.FC<PostCardProps> = ({ data, currentUser }) => {
   };
 
   const handleDelete = () => {
-    router.push(`/post/${data.id}`);
+    router.push(`/post/${post.id}`);
     deletePostModal.onOpen();
   };
 
@@ -37,23 +46,25 @@ const PostCard: React.FC<PostCardProps> = ({ data, currentUser }) => {
       {/* Top: Username, Date, and three dot menu */}
       <div className="flex items-center justify-between">
         <div
-          onClick={() => router.push(`${data.user.id}`)}
+          onClick={() => router.push(`${post.user.id}`)}
           className="flex gap-3 items-center cursor-pointer"
         >
+          {post.user.image && (
+            <div>
+              <CldImage
+                src={post.user.image}
+                width={50}
+                height={50}
+                crop="fill"
+                alt="pfp"
+                className="rounded-full object-cover"
+              />
+            </div>
+          )}
           <div>
-            <CldImage
-              src={data.user.image}
-              width={50}
-              height={50}
-              crop="fill"
-              alt="pfp"
-              className="rounded-full object-cover"
-            />
-          </div>
-          <div>
-            <div className="font-bold">{data.user.username}</div>
+            <div className="font-bold">{post.user.username}</div>
             <div className="font-medium text-sm text-neutral-400">
-              {formatTimeAgo(data.createdAt)}
+              {formatTimeAgo(post.createdAt)}
             </div>
           </div>
         </div>
@@ -65,11 +76,11 @@ const PostCard: React.FC<PostCardProps> = ({ data, currentUser }) => {
           {isOpen && (
             <div className="absolute right-0 mt-2  bg-white border border-gray-200 rounded-lg shadow-lg w-44">
               <div className="pt-2 pb-2 flex flex-col gap-2">
-                {currentUser.id !== data.user.id && (
+                {currentUser.id !== post.user.id && (
                   <>
                     <div className="w-fit pl-3">
                       <FollowButton
-                        userId={data.user.id}
+                        userId={post.user.id}
                         currentUser={currentUser}
                       />
                     </div>
@@ -91,7 +102,7 @@ const PostCard: React.FC<PostCardProps> = ({ data, currentUser }) => {
                   </>
                 )}
 
-                {currentUser.id === data.user.id && (
+                {currentUser.id === post.user.id && (
                   <>
                     <div
                       onClick={() => handleDelete()}
@@ -101,7 +112,7 @@ const PostCard: React.FC<PostCardProps> = ({ data, currentUser }) => {
                     </div>
                     <div className="h-[1px] bg-neutral-300/50 w-full rounded-full" />
                     <div
-                      onClick={() => router.push(`/post/${data.id}/edit`)}
+                      onClick={() => router.push(`/post/${post.id}/edit`)}
                       className="pl-3 pt-2 pb-2  cursor-pointer hover:opacity-80 font-base   "
                     >
                       Edit
@@ -122,12 +133,12 @@ const PostCard: React.FC<PostCardProps> = ({ data, currentUser }) => {
         </div>
       </div>
       {/* Image content with title */}
-      <div onClick={() => router.push(`/post/${data.id}`)} className="">
+      <div onClick={() => router.push(`/post/${post.id}`)} className="">
         <div className="mt-2 mb-2">
-          <Heading title={data.title} />
+          <Heading title={post.title} />
         </div>
         <CldImage
-          src={data.imageSrc}
+          src={post.imageSrc}
           crop="fill"
           width="1080"
           height="1080"
@@ -139,37 +150,42 @@ const PostCard: React.FC<PostCardProps> = ({ data, currentUser }) => {
       {/* Buttons: like, comment, share */}
       <div className="flex items-center justify-between mt-3 mb-2">
         <div className="flex gap-4">
-          <HeartButton postId={data.id} currentUser={currentUser} />
-          {/* {data.likeIds.length} */}
-          <CommentButton postId={data.id} currentUser={currentUser} />
-          {/* {data.comments.length} */}
+          <HeartButton postId={post.id} currentUser={currentUser} />
+          {/* {post.likeIds.length} */}
+          <div
+            className="relative transition hover:opacity-80 cursor-pointer"
+            onClick={() => router.push(`/post/${post.id}#content`)}
+          >
+            <GoCommentDiscussion size={25} />
+          </div>
+          {/* {post.comments.length} */}
         </div>
-        <SaveButton postId={data.id} currentUser={currentUser} />
+        <SaveButton postId={post.id} currentUser={currentUser} />
       </div>
-      <span className="font-bold">{data.likeIds.length} likes</span>
+      <span className="font-bold">{post.likeIds.length} likes</span>
       {/* Username and caption */}
       <div className="flex items-center gap-2 mt-1">
         <div
-          onClick={() => router.push(data.user.id)}
+          onClick={() => router.push(post.user.id)}
           className="text-base font-semibold hover:opacity-60 cursor-pointer"
         >
-          {data.user.username}
+          {post.user.username}
         </div>
-        <div className="font-medium text-md">{data.caption}</div>
+        <div className="font-medium text-md">{post.caption}</div>
       </div>
-      {data.comments.length > 0 && (
+      {post.comments.length > 0 && (
         <div
-          onClick={() => router.push(`/post/${data.id}#comment`)}
+          onClick={() => router.push(`/post/${post.id}#comment`)}
           className="mt-1 hover:opacity-80 cursor-pointer"
         >
-          {data.comments.length === 1 && (
+          {post.comments.length === 1 && (
             <span className="text-base text-neutral-500">
-              View {data.comments.length} comment
+              View {post.comments.length} comment
             </span>
           )}
-          {data.comments.length > 1 && (
+          {post.comments.length > 1 && (
             <span className="text-base text-neutral-500">
-              View all {data.comments.length} comments
+              View all {post.comments.length} comments
             </span>
           )}
         </div>

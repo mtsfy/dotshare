@@ -1,17 +1,14 @@
 "use client";
 
-import { SafeUser } from "@/types";
 import { Post, User } from "@prisma/client";
 import { CldImage } from "next-cloudinary";
-import Button from "./inputs/Button";
 import HeartButton from "./post/HeartButton";
 import SaveButton from "./post/SaveButton";
 import { useRouter } from "next/navigation";
-import CommentButton from "./CommentButton";
 
 interface SavedCardProps {
   data: Post;
-  currentUser: Record<string, any>;
+  currentUser: User;
   actions?: boolean;
 }
 

@@ -1,5 +1,4 @@
 "use client";
-import { SafeUser } from "@/types";
 import { User } from "@prisma/client";
 import axios from "axios";
 import { useRouter } from "next/navigation";

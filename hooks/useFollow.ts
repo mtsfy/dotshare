@@ -1,5 +1,5 @@
 "use client";
-import { SafeUser } from "@/types";
+import { User } from "@prisma/client";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
@@ -7,9 +7,8 @@ import { toast } from "react-hot-toast";
 
 interface IUseFollow {
     userId: string;
-    currentUser: Record<string, any>;
+    currentUser: User;
 }
-
 const useFollow = ({userId, currentUser}: IUseFollow) => {
 
     const router = useRouter();

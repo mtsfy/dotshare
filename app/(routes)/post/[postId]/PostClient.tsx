@@ -1,31 +1,49 @@
 "use client";
 
-import Avatar from "@/components/Avatar";
-import CommentButton from "@/components/CommentButton";
 import Button from "@/components/inputs/Button";
 import Input from "@/components/inputs/Input";
 import HeartButton from "@/components/post/HeartButton";
 import SaveButton from "@/components/post/SaveButton";
-import { SafeUser } from "@/types";
 import axios from "axios";
 import { CldImage } from "next-cloudinary";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import {
-  GoDot,
-  GoDotFill,
-  GoKebabHorizontal,
-  GoScreenFull,
-} from "react-icons/go";
+import { GoCommentDiscussion, GoKebabHorizontal } from "react-icons/go";
 import { formatTimeAgo } from "@/libs/utils";
 import FollowButton from "@/components/FollowButton";
 import useDeletePostModal from "@/hooks/useDeletePostModal";
+import { User } from "@prisma/client";
 
 interface PostClientProps {
-  post: Record<string, any>;
-  currentUser: SafeUser;
+  post: {
+    id: string;
+    createdAt: Date;
+    updatedAt: Date;
+    imageSrc: string;
+    likeIds: string[];
+    caption: string;
+    title: string;
+    userId: string;
+
+    user: {
+      id: string;
+      name: string | null;
+      username: string;
+      image: string | null;
+    };
+    comments: {
+      user: {
+        id: string;
+        name: string | null;
+        username: string;
+      };
+      content: string;
+      createdAt: Date;
+    }[];
+  };
+  currentUser: User;
 }
 
 const PostClient: React.FC<PostClientProps> = ({ post, currentUser }) => {
@@ -84,14 +102,16 @@ const PostClient: React.FC<PostClientProps> = ({ post, currentUser }) => {
                   onClick={() => router.push(`/${post.user.id}`)}
                   className="cursor-pointer flex items-center"
                 >
-                  <CldImage
-                    crop="fill"
-                    width={45}
-                    height={45}
-                    src={post.user.image}
-                    alt="pfp"
-                    className="object-cover object-center rounded-full"
-                  />
+                  {post.user.image && (
+                    <CldImage
+                      crop="fill"
+                      width={45}
+                      height={45}
+                      src={post.user.image}
+                      alt="pfp"
+                      className="object-cover object-center rounded-full"
+                    />
+                  )}
                   <span className="font-bold pl-2 hover:opacity-60 cursor-pointer transition ">
                     {post.user.username}
                   </span>
@@ -215,7 +235,12 @@ const PostClient: React.FC<PostClientProps> = ({ post, currentUser }) => {
                 {post.likeIds.length}
               </div>
               <div className="text-center">
-                <CommentButton postId={post.id} currentUser={currentUser} />
+                <div
+                  className="relative transition hover:opacity-80 cursor-pointer"
+                  onClick={() => router.push(`/post/${post.id}#content`)}
+                >
+                  <GoCommentDiscussion size={25} />
+                </div>
                 {post.comments.length}
               </div>
             </div>

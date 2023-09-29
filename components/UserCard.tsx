@@ -5,11 +5,11 @@ import Avatar from "./Avatar";
 import Image from "next/image";
 import { CldImage } from "next-cloudinary";
 import FollowButton from "./FollowButton";
-import { SafeUser } from "@/types";
+import { User } from "@prisma/client";
 
 interface UserCardProps {
   user: Record<string, any>;
-  currentUser?: SafeUser;
+  currentUser?: User;
 }
 
 const UserCard: React.FC<UserCardProps> = ({ user, currentUser }) => {

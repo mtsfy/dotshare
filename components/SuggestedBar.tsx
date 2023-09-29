@@ -1,10 +1,10 @@
 "use client";
 
-import { SafeUser } from "@/types";
 import Avatar from "./Avatar";
+import { User } from "@prisma/client";
 
 interface SuggestedBarProps {
-  currentUser: SafeUser;
+  currentUser: User;
 }
 
 const SuggestedBar: React.FC<SuggestedBarProps> = ({ currentUser }) => {

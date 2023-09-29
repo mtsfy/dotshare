@@ -1,12 +1,12 @@
 "use client";
 
 import useFollow from "@/hooks/useFollow";
-import { SafeUser } from "@/types";
+import { User } from "@prisma/client";
 import { ScaleLoader } from "react-spinners";
 
 interface FollowButtonProps {
   userId: string;
-  currentUser: Record<string, any>;
+  currentUser: User;
 }
 
 const FollowButton: React.FC<FollowButtonProps> = ({ userId, currentUser }) => {

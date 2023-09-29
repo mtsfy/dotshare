@@ -1,7 +1,7 @@
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
-import { BiDollar } from "react-icons/bi";
+import { twMerge } from "tailwind-merge";
 
-interface InputProps {
+interface TextAreaProps {
   id: string;
   label: string;
   type?: string;
@@ -9,9 +9,10 @@ interface InputProps {
   required?: boolean;
   register: UseFormRegister<FieldValues>;
   errors: FieldErrors;
+  className?: string;
 }
 
-const Input: React.FC<InputProps> = ({
+const TextArea: React.FC<TextAreaProps> = ({
   id,
   label,
   type = "text",
@@ -19,21 +20,24 @@ const Input: React.FC<InputProps> = ({
   required = false,
   register,
   errors,
+  className,
 }) => {
   return (
-    <div className="w-full relative">
-      <input
-        type={type}
+    <div className=" relative">
+      <textarea
         id={id}
         disabled={disabled}
         {...register(id, { required })}
-        placeholder=" "
-        className={`
+        className={twMerge(
+          `
         peer
         w-full
-        p-4
+        p-8
        
+        resize-none
         
+        h-40
+
         bg-white
         border-2
         rounded-md
@@ -42,13 +46,12 @@ const Input: React.FC<InputProps> = ({
         disabled:opacity-70
         disabled:cursor-not-allowed
         pl-4
-        ${type === "password" ? "text-xl" : "text-md"}
-        ${type === "password" ? "font-bold" : "font-normal"}
-        ${type === "password" ? "pt-6" : "pt-8"}
         ${errors[id] ? "border-red-500" : "border-neutral-300"}
         ${errors[id] ? "focus:border-red-500" : "focus:border-black"}
         
-        `}
+        `,
+          className
+        )}
       />
       <label
         className={`
@@ -75,4 +78,4 @@ const Input: React.FC<InputProps> = ({
   );
 };
 
-export default Input;
+export default TextArea;

@@ -1,5 +1,7 @@
 "use client";
 
+import CreatePostModal from "@/components/modals/CreatePostModal";
+import DeletePostModal from "@/components/modals/DeletePostModal";
 import SignInModal from "@/components/modals/SignInModal";
 import SignUpModal from "@/components/modals/SignUpModal";
 import { useEffect, useState } from "react";
@@ -18,8 +20,10 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({}) => {
   }
   return (
     <div>
+      <DeletePostModal />
       <SignInModal />
       <SignUpModal />
+      <CreatePostModal />
     </div>
   );
 };

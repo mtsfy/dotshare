@@ -4,14 +4,16 @@ import useSignUpModal from "@/hooks/useSignUpModal";
 import { useCallback, useState } from "react";
 import Modal from "./Modal";
 import Heading from "../Heading";
-import Input from "../Input";
+import Input from "../inputs/Input";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import Button from "../Button";
+import Button from "../inputs/Button";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import useSignInModal from "@/hooks/useSignInModal";
-
+import { FcGoogle } from "react-icons/fc";
+import { AiFillGithub } from "react-icons/ai";
+import { signIn } from "next-auth/react";
 const SignUpModal = () => {
   const signUpModal = useSignUpModal();
   const signInModal = useSignInModal();
@@ -41,7 +43,6 @@ const SignUpModal = () => {
       .then(() => {
         toast.success("Signed up successfully!");
         signUpModal.onClose();
-        signInModal.onOpen();
       })
       .catch(() => {
         toast.error("Something went wrong.");
@@ -53,7 +54,10 @@ const SignUpModal = () => {
 
   const bodyContent = (
     <div className="flex flex-col gap-2 md:gap-4">
-      <Heading title="Welcome to dotshare!" subtitle="Create an account." />
+      <Heading
+        title="Welcome to dotshare!"
+        subtitle="Sign up to see what your friends are sharing."
+      />
       <Input
         id="name"
         label="Name"
@@ -81,8 +85,18 @@ const SignUpModal = () => {
   const footerContent = (
     <div className="flex flex-col gap-4">
       <hr />
-      <Button onClick={() => {}} outline label="Continue with Google" />
-      <Button onClick={() => {}} outline label="Continue with Github" />
+      <Button
+        onClick={() => signIn("google")}
+        outline
+        icon={FcGoogle}
+        label="Continue with Google"
+      />
+      <Button
+        onClick={() => signIn("github")}
+        outline
+        icon={AiFillGithub}
+        label="Continue with Github"
+      />
       <div className="text-neutral-500 text-center mt-2 font-light">
         <div>
           Already have an account?{" "}

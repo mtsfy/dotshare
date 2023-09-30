@@ -7,7 +7,6 @@ import PostCard from "@/components/post/PostCard";
 
 const Home = async () => {
   const currentUser = await getCurrentUser();
-  const posts = await getPosts();
 
   if (!currentUser) {
     return (
@@ -20,6 +19,7 @@ const Home = async () => {
       </ClientOnly>
     );
   }
+  const posts = await getPosts();
 
   if (posts?.length === 0) {
     return (
@@ -46,11 +46,7 @@ const Home = async () => {
                   key={post.id}
                   className="col-span-1 gap-3 p-8 flex flex-col justify-center w-full"
                 >
-                  <PostCard
-                    key={post.id}
-                    post={post}
-                    currentUser={currentUser}
-                  />
+                  <PostCard post={post} currentUser={currentUser} />
                 </div>
               </>
             ))}
